@@ -33,7 +33,7 @@ class SudokuSolver {
     }
 
     private static char[][] processData(File dataFile) {
-        char[][] board = new char[9][9]; // A standard Sudoku board is 9x9
+        char[][] board = new char[9][9]; 
     
         try (BufferedReader br = new BufferedReader(new FileReader(dataFile))) {
             String line;
@@ -41,13 +41,13 @@ class SudokuSolver {
     
             // Read each line of the file
             while ((line = br.readLine()) != null && row < 9) {
-                // Remove brackets and quotes
+                // Removes brackets and quotes
                 line = line.replaceAll("[\\[\\]\"]", "");
                 String[] cells = line.split(",");
     
-                // Fill the board
+                
                 for (int col = 0; col < 9; col++) {
-                    board[row][col] = cells[col].charAt(0); // Get the character
+                    board[row][col] = cells[col].charAt(0);
                 }
                 row++;
             }
@@ -63,25 +63,25 @@ class SudokuSolver {
             for (int col = 0; col < 9; col++) {
                 System.out.print(board[row][col] + " ");
             }
-            System.out.println(); // Move to the next line after each row
+            System.out.println(); 
         }
     }
 
 
     public void solveSudoku(char[][] board) {
-        solve(board);  // Start solving the board
+        solve(board); 
      }
  
      public boolean solve(char[][] board) {
          int n = board.length;
-         for (int row = 0; row < n; row++) {  // Iterate through each row
-             for (int col = 0; col < n; col++) {  // Iterate through each column
+         for (int row = 0; row < n; row++) {  
+             for (int col = 0; col < n; col++) { 
                  if (board[row][col] == '.') {  // Checks if the cell is empty
-                     for (int tryNum = 1; tryNum <= 9; tryNum++) {  // Trys numbers 1 to 9
-                         if (isConflicts(board, tryNum, row, col)) {  // Check for issues
-                             board[row][col] = (char)(tryNum + '0');  // Place the number
+                     for (int tryNum = 1; tryNum <= 9; tryNum++) { 
+                         if (isConflicts(board, tryNum, row, col)) {  
+                             board[row][col] = (char)(tryNum + '0');  
                              if (solve(board)) {  // Recursively call to fill out the board
-                                 return true;  // Returns true if solved
+                                 return true;  
                              }
                              board[row][col] = '.';  // If not solvable reset the cell
                          }
@@ -97,10 +97,10 @@ class SudokuSolver {
      public boolean isConflicts(char[][] board, int tryNum, int row, int col) {
          return !rowCheck(board, tryNum, row) && 
                 !colCheck(board, tryNum, col) && 
-                !boxCheck(board, tryNum, row, col);  // Check for issues
+                !boxCheck(board, tryNum, row, col);  
      }
  
-     // Check for conflicts in the row
+     // Checks for conflicts in the row
      public boolean rowCheck(char[][] board, int tryNum, int row) {
          for (int i = 0; i < board.length; i++) {
              if (board[row][i] == (char)(tryNum + '0')) {
@@ -110,7 +110,7 @@ class SudokuSolver {
          return false;
      }
  
-     // Check for conflicts in the column
+     // Checks for conflicts in the column
      public boolean colCheck(char[][] board, int tryNum, int col) {
          for (int i = 0; i < board[0].length; i++) {
              if (board[i][col] == (char)(tryNum + '0')) {
@@ -120,7 +120,7 @@ class SudokuSolver {
          return false;
      }
  
-     // Check for conflicts in 3x3 cell box
+     // Checks for conflicts in 3x3 cell box
      public boolean boxCheck(char[][] board, int tryNum, int row, int col) {
          int localRow = row - row % 3;
          int localCol = col - col % 3;
